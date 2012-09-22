@@ -1,6 +1,7 @@
 ##TODO
 
 * Redesign modularity and distribution of the package.
+* Add more examples
 
 ### Linkedlist
 
