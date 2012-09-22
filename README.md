@@ -32,7 +32,13 @@ The Goods API reference is available on GoPkgDoc:
 
 ## Installation
 
-	// Using linkedlist e.g.
+First (go) get your prefered package:
+
+	$ go get github.com/emnl/goods/linkedlist
+
+
+Then import it into your project:
+
 	import "github.com/emnl/goods/linkedlist"
 	
 
