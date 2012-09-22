@@ -22,7 +22,13 @@ Heavily inspired by Ruby (♥).
 
 ## Documentation
 
-The Goods API reference is available on [GoPkgDoc](http://go.pkgdoc.org/github.com/emnl/goods).
+The Goods API reference is available on GoPkgDoc:
+
+* [Linkedlist](http://go.pkgdoc.org/github.com/emnl/goods/linkedlist)
+* [Queue](http://go.pkgdoc.org/github.com/emnl/goods/queue)
+* [Stack](http://go.pkgdoc.org/github.com/emnl/goods/stack)
+* [Binary Tree](http://go.pkgdoc.org/github.com/emnl/goods/binarytree)
+* [Red-Black Tree](http://go.pkgdoc.org/github.com/emnl/goods/redblacktree)
 
 ## Installation
 
