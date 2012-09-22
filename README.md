@@ -16,7 +16,7 @@ Linkedlist, Queue, and Stack is completely **thread-safe**!
 
 ## Usage
 
-Please see the [provided examples](http://github.com/emnl/goods/examples).
+Please see the [provided examples](https://github.com/emnl/goods/tree/master/examples).
 
 Heavily inspired by Ruby (♥).
 
