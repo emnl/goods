@@ -3,7 +3,7 @@
 // under the hood and maintains a very low complexity.
 package stack
 
-import "../linkedlist"
+import "github.com/emnl/goods/linkedlist"
 
 // Stack uses a linkedlist to behave as a last-in-first-out
 // stack.

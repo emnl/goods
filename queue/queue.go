@@ -3,7 +3,7 @@
 // under the hood and maintains a very low complexity.
 package queue
 
-import "../linkedlist"
+import "github.com/emnl/goods/linkedlist"
 
 // Queue uses a linkedlist to behave as a first-in-first-out
 // queue.
