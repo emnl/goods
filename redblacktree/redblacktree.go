@@ -3,10 +3,10 @@
 package redblacktree
 
 import (
-	"../queue"
-	"../stack"
 	"errors"
 	"fmt"
+	"github.com/emnl/goods/queue"
+	"github.com/emnl/goods/stack"
 	"math"
 )
 

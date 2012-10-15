@@ -3,10 +3,10 @@
 package binarytree
 
 import (
-	"../queue"
-	"../stack"
 	"errors"
 	"fmt"
+	"github.com/emnl/goods/queue"
+	"github.com/emnl/goods/stack"
 )
 
 // A BinaryTree has a size, a pointer to the root node, and
