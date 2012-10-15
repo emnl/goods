@@ -67,7 +67,7 @@ func (T *RedBlackTree) Add(E Elem) error {
 	oldsize := T.size
 	T.insert(E)
 	if oldsize == T.size {
-		return errors.New("Item already exists in Tree")
+		return errors.New("Item already exists in Tree.")
 	}
 	return nil
 }
@@ -78,7 +78,7 @@ func (T *RedBlackTree) Remove(E Elem) error {
 	oldsize := T.size
 	T.delete(E)
 	if oldsize == T.size {
-		return errors.New("Item not found in Tree")
+		return errors.New("Item not found in Tree.")
 	}
 	return nil
 }
@@ -126,7 +126,7 @@ func (T *RedBlackTree) InOrder() chan Elem {
 		nodes := stack.New()
 		currentNode := T.root
 
-		for true {
+		for {
 			if currentNode != nil {
 				nodes.Push(currentNode)
 				currentNode = currentNode.left

@@ -170,7 +170,7 @@ func (L *LinkedList) RemoveFirst() error {
 	defer L.mu.Unlock()
 
 	if L.size == 0 {
-		return errors.New("List is empty")
+		return errors.New("List is empty.")
 	}
 
 	L.removeNode(L.first)
@@ -184,7 +184,7 @@ func (L *LinkedList) RemoveLast() error {
 	defer L.mu.Unlock()
 
 	if L.size == 0 {
-		return errors.New("List is empty")
+		return errors.New("List is empty.")
 	}
 
 	L.removeNode(L.last)
@@ -199,7 +199,7 @@ func (L *LinkedList) Remove(V Elem) error {
 
 	res := L.slowGet(V)
 	if res == nil {
-		return errors.New("Item not found in list")
+		return errors.New("Item not found in list.")
 	}
 
 	L.removeNode(res)
@@ -214,7 +214,7 @@ func (L *LinkedList) FastRemove(V Elem) error {
 
 	res := L.fastGet(V)
 	if res == nil {
-		return errors.New("Item not found in list")
+		return errors.New("Item not found in list.")
 	}
 
 	L.removeNode(res)
@@ -223,7 +223,7 @@ func (L *LinkedList) FastRemove(V Elem) error {
 
 // Iter is an iterator to be used for iterate
 // the linkedlist (front first) easily.
-// Usage: x := range list.Iter() {}
+// Usage: for x := range list.Iter() {}
 func (L *LinkedList) Iter() chan Elem {
 	L.mu.RLock()
 	defer L.mu.RUnlock()
@@ -260,7 +260,7 @@ func FromSlice(slc interface{}) *LinkedList {
 }
 
 // Conc concatenates two linkedlists. The function is
-// efficient with a komplexity at O(1).
+// efficient with a complexity at O(1).
 func (L *LinkedList) Conc(other *LinkedList) {
 	L.mu.Lock()
 	defer L.mu.Unlock()
@@ -374,7 +374,7 @@ func (L *LinkedList) fastGet(E Elem) *node {
 // getNode retrives a node given an index.
 func (L *LinkedList) getNode(i int) (*node, error) {
 	if L.size == 0 || i > L.size-1 {
-		return nil, errors.New("Index out of bound")
+		return nil, errors.New("Index out of bound.")
 	}
 
 	var n *node
