@@ -326,7 +326,7 @@ func (L *LinkedList) slowGet(E Elem) *node {
 }
 
 // fastGet searches the list from both ends concurrently.
-// This returns any instance.
+// This returns any instance. O(n/2)
 func (L *LinkedList) fastGet(E Elem) *node {
 
 	/* Delegate to slower get if the list is small enough */
@@ -362,13 +362,20 @@ func (L *LinkedList) fastGet(E Elem) *node {
 		done <- true
 	}()
 
-	go func() {
-		<-done
-		<-done
-		found <- nil
-	}()
+	/* If we receive done twice, return nil. */
+	select {
+	case <-done:
+		select {
+		case <-done:
+			return nil
+		case fnd := <-found:
+			return fnd
+		}
+	case fnd := <-found:
+		return fnd
+	}
 
-	return <-found
+	return nil
 }
 
 // getNode retrives a node given an index.
