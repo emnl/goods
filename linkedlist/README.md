@@ -1,6 +1,8 @@
 Linkedlist
 =======================================================================
 
+[http://go.pkgdoc.org/github.com/emnl/goods/linkedlist](http://go.pkgdoc.org/github.com/emnl/goods/linkedlist)
+
 Constructor
 -----------------------------------------------------------------------
 
