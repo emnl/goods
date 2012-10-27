@@ -1,5 +1,5 @@
 // Package redblacktree provides a self-balanced
-// redblack-tree datastructure.
+// red-black tree datastructure.
 package redblacktree
 
 import (
@@ -10,8 +10,9 @@ import (
 	"math"
 )
 
-// A RedBlackTree has a size, a pointer to the root node, and
+// A redblacktree has a size, a pointer to the root node, and
 // a user defined function which is used to compare the node's element.
+//
 // It has the following requirements:
 // 1. A node is either red or black.
 // 2. The root is black.
@@ -19,6 +20,7 @@ import (
 // 4. Both children of every red node are black.
 // 5. Every simple path from a given node to any of its descendant leaves
 //    contains the same number of black nodes.
+//
 type RedBlackTree struct {
 	less LessFunc
 	size int
@@ -42,27 +44,43 @@ type Elem interface{}
 // LessFunc is used as a user function to compare elements in the list.
 // It must return true if the first parameter is less then the second.
 // False, if the first and second are equal.
+//
+// e.g. intLess func(a,b interface{}) { return (a.(int) < b.(int)) }
+//
 type LessFunc func(a, b interface{}) bool
 
 // New is used as an optional constructor for the BinaryTree
 // struct.
+//
+// e.g. mytree := redblacktree.New(intLess)
+//
 func New(lf LessFunc) *RedBlackTree {
 	rbt := RedBlackTree{lf, 0, nil}
 	return &rbt
 }
 
 // Size returns the size of the Tree.
+//
+// e.g. (2 (1) (3)).Size() => 3
+//
 func (T *RedBlackTree) Size() int {
 	return T.size
 }
 
 // Empty returns true if the Tree is empty.
+//
+// e.g. (2 (1) (3)).Empty() => false
+//      ().Empty() => true
+//
 func (T *RedBlackTree) Empty() bool {
 	return T.root == nil
 }
 
 // Add inserts an element into the Tree
 // and keeps the invariant of a redblacktree.
+//
+// e.g. (2 () ()).Add(3) => (2 () (3))
+//
 func (T *RedBlackTree) Add(E Elem) error {
 	oldsize := T.size
 	T.insert(E)
@@ -74,6 +92,9 @@ func (T *RedBlackTree) Add(E Elem) error {
 
 // Remove deletes an element from the Tree
 // and keeps the invariant of a redblacktree.
+//
+// e.g. (2 (1) (3)).Remove(2) => (1 () (3))
+//
 func (T *RedBlackTree) Remove(E Elem) error {
 	oldsize := T.size
 	T.delete(E)
@@ -85,11 +106,18 @@ func (T *RedBlackTree) Remove(E Elem) error {
 
 // Contains returns true if the given element exists
 // within the Tree.
+//
+// e.g. (2 (1) (3)).Contains(1) => true
+//      (2 (1) (3)).Contains(4) => false
+//
 func (T *RedBlackTree) Contains(E Elem) bool {
 	return T.get(E) != nil
 }
 
-// First returns the leftmost (smallest) element in the Tree.
+// First returns the left-most (smallest) element in the Tree.
+//
+// e.g. (2 (1) (3)).First() => 1
+//
 func (T *RedBlackTree) First() Elem {
 	if T.Empty() {
 		return nil
@@ -97,7 +125,10 @@ func (T *RedBlackTree) First() Elem {
 	return T.root.findMin().elem
 }
 
-// Last returns the rightmost (largest) element in the Tree.
+// Last returns the right-most (largest) element in the Tree.
+//
+// e.g. (2 (1) (3)).Last() => 3
+//
 func (T *RedBlackTree) Last() Elem {
 	if T.Empty() {
 		return nil
@@ -105,7 +136,10 @@ func (T *RedBlackTree) Last() Elem {
 	return T.root.findMax().elem
 }
 
-// Depth returns the logical ( O(log(n)) ) depth of the Tree.
+// Depth returns the logical depth of the Tree.
+//
+// e.g. Log2(tree.Size())
+//
 func (T *RedBlackTree) Depth() float64 {
 	return math.Log2(float64(T.size))
 }
@@ -119,6 +153,9 @@ func (T *RedBlackTree) Height() float64 {
 // Traverse the left subtree.
 // Visit the root.
 // Traverse the right subtree.
+//
+// e.g. for x := range (2 (1) (3)).InOrder() { x } => 1, 2, 3
+//
 func (T *RedBlackTree) InOrder() chan Elem {
 	ch := make(chan Elem, T.size)
 	go func() {
@@ -151,6 +188,9 @@ func (T *RedBlackTree) InOrder() chan Elem {
 // Visit the root.
 // Traverse the left subtree.
 // Traverse the right subtree.
+//
+// e.g. for x := range (2 (1) (3)).PreOrder() { x } => 2, 1, 3
+//
 func (T *RedBlackTree) PreOrder() chan Elem {
 	ch := make(chan Elem, T.size)
 	go func() {
@@ -186,6 +226,9 @@ func (T *RedBlackTree) PreOrder() chan Elem {
 // Traverse the left subtree.
 // Traverse the right subtree.
 // Visit the root.
+//
+// e.g. for x := range (2 (1) (3)).PostOrder() { x } => 1, 3, 2
+//
 func (T *RedBlackTree) PostOrder() chan Elem {
 	ch := make(chan Elem, T.size)
 	go func() {
@@ -226,6 +269,9 @@ func (T *RedBlackTree) PostOrder() chan Elem {
 
 // LevelOrder is an iterator over the levels of the tree.
 // Also known as breadth-first traversal.
+//
+// e.g. for x := range (2 (1) (3)).LevelOrder() { x } => 2, 1, 3
+//
 func (T *RedBlackTree) LevelOrder() chan Elem {
 	ch := make(chan Elem, T.size)
 	go func() {

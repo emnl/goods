@@ -193,6 +193,20 @@ func TestFastRemove(t *testing.T) {
 	}
 }
 
+func TestRemoveAll(t *testing.T) {
+	list := New()
+
+	list.AddLast(10)
+	list.AddLast(20)
+	list.AddLast(10)
+
+	list.RemoveAll(10)
+
+	if list.First() != 20 || list.Size() != 1 {
+		t.Errorf("RemoveAll should delete all instances of the given element.")
+	}
+}
+
 func TestToSlice(t *testing.T) {
 	list := New()
 
@@ -228,6 +242,105 @@ func TestConc(t *testing.T) {
 		t.Errorf("Conc should append the given list to the end of the current list.")
 	}
 }
+
+func TestReduce(t *testing.T) {
+	list := New()
+	f := func(x, y interface{}) interface{} { return (x.(int) + y.(int)) }
+
+	list.AddLast(1)
+	list.AddLast(2)
+	list.AddLast(3)
+	list.AddLast(4)
+
+	if list.Reduce(f) != 10 {
+		t.Errorf("Reduce should return 10 with the list (1,2,3,4) and with the addition function.")
+	}
+
+	if New().Reduce(f) != nil {
+		t.Errorf("Reduce should return nil on an empty list.")
+	}
+}
+
+func TestFilter(t *testing.T) {
+	list := New()
+
+	list.AddLast(1)
+	list.AddLast(2)
+	list.AddLast(3)
+	list.AddLast(4)
+	list.AddLast(5)
+	list.AddLast(6)
+
+	f := func(x interface{}) bool { return (x.(int) > 3) }
+	list.Filter(f)
+
+	if list.Contains(1) || list.Contains(2) || list.Contains(3) || list.Size() != 3 {
+		t.Errorf("Filter should delete values that returns false on the given function.")
+	}
+}
+
+func TestParFilter(t *testing.T) {
+	list := New()
+
+	list.AddLast(1)
+	list.AddLast(2)
+	list.AddLast(3)
+	list.AddLast(4)
+	list.AddLast(5)
+	list.AddLast(6)
+
+	f := func(x interface{}) bool { return (x.(int) > 3) }
+	list.ParFilter(f)
+
+	if list.Contains(1) || list.Contains(2) || list.Contains(3) || list.Size() != 3 {
+		t.Errorf("ParFilter should delete values that returns false on the given function.")
+	}
+}
+
+func TestMap(t *testing.T) {
+	list := New()
+
+	list.AddLast(1)
+	list.AddLast(2)
+	list.AddLast(3)
+
+	f := func(x interface{}) interface{} { return (x.(int) * 10) }
+	list.Map(f)
+
+	if !list.Contains(10) || !list.Contains(20) || !list.Contains(30) {
+		t.Errorf("Map should perform a given function on each element of the list.")
+	}
+}
+
+func TestParMap(t *testing.T) {
+	list := New()
+
+	list.AddLast(1)
+	list.AddLast(2)
+	list.AddLast(3)
+
+	f := func(x interface{}) interface{} { return (x.(int) * 10) }
+	list.ParMap(f)
+
+	if !list.Contains(10) || !list.Contains(20) || !list.Contains(30) {
+		t.Errorf("ParMap should perform a given function on each element of the list.")
+	}
+}
+
+func TestReverse(t *testing.T) {
+	list := New()
+
+	list.AddLast(1)
+	list.AddLast(2)
+	list.AddLast(3)
+
+	list.Reverse()
+
+	if list.First() != 3 || list.Last() != 1 {
+		t.Errorf("Reverse should reverse the order of the elements in the list.")
+	}
+}
+
 func TestSerialize(t *testing.T) {
 	// TODO
 }

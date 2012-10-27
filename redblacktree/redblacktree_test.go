@@ -68,9 +68,7 @@ func TestNRemove(t *testing.T) {
 		t.Errorf("Nothing should have been removed.")
 	}
 
-	tree.Remove(10)
-
-	if tree.size != 0 {
+	if tree.Remove(10) != nil {
 		t.Errorf("Remove didn't work.")
 	}
 }

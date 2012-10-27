@@ -9,7 +9,7 @@ import (
 	"github.com/emnl/goods/stack"
 )
 
-// A BinaryTree has a size, a pointer to the root node, and
+// A binarytree has a size, a pointer to the root node, and
 // a user defined function which is used to compare the node's element.
 type BinaryTree struct {
 	less LessFunc
@@ -31,26 +31,42 @@ type Elem interface{}
 // LessFunc is used as a user function to compare elements in the list.
 // It must return true if the first parameter is less then the second.
 // False, if the first and second are equal.
+//
+// e.g. intLess func(a,b interface{}) { return (a.(int) < b.(int)) }
+//
 type LessFunc func(a, b interface{}) bool
 
-// New is used as an optional constructor for the BinaryTree
+// New is used as an optional constructor for the binarytree
 // struct.
+//
+// e.g. mytree := binarytree.New(intLess)
+//
 func New(lf LessFunc) *BinaryTree {
 	bt := BinaryTree{lf, 0, nil}
 	return &bt
 }
 
 // Size returns the size of the tree.
+//
+// e.g. (2 (1) (3)).Size() => 3
+//
 func (T *BinaryTree) Size() int {
 	return T.size
 }
 
 // Empty returns true if the tree is empty.
+//
+// e.g. (2 (1) (3)).Empty() => false
+//      ().Empty() => true
+//
 func (T *BinaryTree) Empty() bool {
 	return T.size == 0
 }
 
 // Add adds the given element to the tree.
+//
+// e.g. (2 () ()).Add(3) => (2 () (3))
+//
 func (T *BinaryTree) Add(E Elem) error {
 	oldsize := T.size
 	T.insert(E)
@@ -61,6 +77,9 @@ func (T *BinaryTree) Add(E Elem) error {
 }
 
 // Remove removes the given element from the tree.
+//
+// e.g. (2 (1) (3)).Remove(2) => (1 () (3))
+//
 func (T *BinaryTree) Remove(E Elem) error {
 	rem := T.remove(E)
 	if !rem {
@@ -73,11 +92,18 @@ func (T *BinaryTree) Remove(E Elem) error {
 
 // Contains returns true if the given element exists within
 // the tree.
+//
+// e.g. (2 (1) (3)).Contains(1) => true
+//      (2 (1) (3)).Contains(4) => false
+//
 func (T *BinaryTree) Contains(E Elem) bool {
 	return T.get(E) != nil
 }
 
 // First returns the leftmost element in the tree.
+//
+// e.g. (2 (1) (3)).First() => 1
+//
 func (T *BinaryTree) First() Elem {
 	if T.Empty() {
 		return nil
@@ -86,6 +112,9 @@ func (T *BinaryTree) First() Elem {
 }
 
 // Last returns the rightmost element in the tree.
+//
+// e.g. (2 (1) (3)).Last() => 3
+//
 func (T *BinaryTree) Last() Elem {
 	if T.Empty() {
 		return nil
@@ -109,6 +138,9 @@ func (T *BinaryTree) PrintTree() {
 // Visit the root.
 // Traverse the left subtree.
 // Traverse the right subtree.
+//
+// e.g. for x := range (2 (1) (3)).InOrder() { x } => 1, 2, 3
+//
 func (T *BinaryTree) InOrder() chan Elem {
 	ch := make(chan Elem, T.size)
 	go func() {
@@ -141,6 +173,9 @@ func (T *BinaryTree) InOrder() chan Elem {
 // Traverse the left subtree.
 // Visit the root.
 // Traverse the right subtree.
+//
+// e.g. for x := range (2 (1) (3)).PreOrder() { x } => 2, 1, 3
+//
 func (T *BinaryTree) PreOrder() chan Elem {
 	ch := make(chan Elem, T.size)
 	go func() {
@@ -175,6 +210,9 @@ func (T *BinaryTree) PreOrder() chan Elem {
 // Traverse the left subtree.
 // Traverse the right subtree.
 // Visit the root.
+//
+// e.g. for x := range (2 (1) (3)).PostOrder() { x } => 1, 3, 2
+//
 func (T *BinaryTree) PostOrder() chan Elem {
 	ch := make(chan Elem, T.size)
 	go func() {
@@ -215,6 +253,9 @@ func (T *BinaryTree) PostOrder() chan Elem {
 
 // LevelOrder is an iterator over the levels of the tree.
 // Also known as breadth-first traversal.
+//
+// e.g. for x := range (2 (1) (3)).LevelOrder() { x } => 2, 1, 3
+//
 func (T *BinaryTree) LevelOrder() chan Elem {
 	ch := make(chan Elem, T.size)
 	go func() {
