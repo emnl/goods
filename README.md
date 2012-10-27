@@ -14,7 +14,7 @@ Goods is a collection of some of the most used data structures around:
 * Binary Tree
 * Red-Black Tree
 
-Linkedlist, Queue, and Stack is completely **thread-safe**!
+Linkedlist, Queue, and Stack are completely **thread-safe**!
 
 Usage
 -----------------------------------------------------------------------
